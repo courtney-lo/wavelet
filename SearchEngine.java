@@ -11,14 +11,6 @@ class Handler implements URLHandler {
     String currentList = "";
     public String handleRequest(URI url) {
 
-        // if(url.getPath().contains("/add")) {
-        //     String[] parameters = url.getQuery().split("=");
-        //     if (parameters[0].equals("s")) {
-        //         currentList += parameters[1];
-        //         return String.format("Added string! Current list is: ") + currentList;
-        //     }
-        // }
-
         String current = "";
         ArrayList <String> fullList = new ArrayList<String>();
 
@@ -30,12 +22,20 @@ class Handler implements URLHandler {
                 return "Added "+ current + " to the list of strings.\n";
             }
         } 
-        // need to compare the inputted string to the arraylist of strings, 
-        // and if there is a match add that string to new list and print out list at end
+
+        // FIX LATER
+        ArrayList <String> tempList = new ArrayList<String>();
         if (url.getPath().contains("/search")) {
             String[] temp = url.getQuery().split("=");
-            return "no";
-            
+            if (temp[0].equals("s")) {
+                for (int i = 0; i < fullList.size(); i++) {
+                    if (fullList.get(i).contains(temp[1])) {
+                        tempList.add(fullList.get(i));
+                    }
+                }
+            }
+            String finalList = String.join(", ", tempList);
+            return "Final list: " + finalList;
         }
          return currentList;
         }
